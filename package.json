@@ -8,9 +8,9 @@
     "test": "ava --watch"
   },
   "ava": {
-		"files": [
-			"./**/*test.js"
-		]
+    "files": [
+      "**/*test.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
   "homepage": "https://github.com/jmmendivil/indigoCodeCamp#readme",
   "dependencies": {
     "twit": "^2.2.11"
+  },
+  "devDependencies": {
+    "ava": "^1.4.1"
   }
 }
