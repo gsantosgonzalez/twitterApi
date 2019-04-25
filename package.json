@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/jmmendivil/indigoCodeCamp#readme",
   "dependencies": {
+    "firebase-admin": "^7.3.0",
+    "firebase-functions": "^2.3.0",
     "twit": "^2.2.11"
   },
   "devDependencies": {
