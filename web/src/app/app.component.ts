@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import * as Dracula from 'graphdracula';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -45,6 +47,7 @@ export class AppComponent {
 
         this.getTGFData(this.userA, this.userB).then(response => {
           this.tgfData = response;
+          this.renderTGF(this.tgfData);
         });
       })
       .catch(error => {
@@ -58,7 +61,7 @@ export class AppComponent {
       this.emptyResults();
 
       this.gettingFollowers = this.http.get(
-        'https://us-central1-indigocodecamp.cloudfunctions.net/commonFollowers?usuarios' + this.userA + ',' + this.userB
+        'https://us-central1-indigocodecamp.cloudfunctions.net/commonFollowers?usuarios=' + this.userA + ',' + this.userB
       )
       .toPromise()
       .then((response: any) => {
@@ -80,6 +83,22 @@ export class AppComponent {
   emptyResults() {
     this.followers = [];
     this.friends = [];
+    this.tgfData = {};
   }
 
+  renderTGF(relaciones) {
+    const Graph = Dracula.Graph;
+    const Renderer = Dracula.Renderer.Raphael;
+    const Layout = Dracula.Layout.Spring;
+
+    const graph = new Graph();
+
+    relaciones.relaciones.forEach(rel => {
+      graph.addEdge(relaciones[rel[0]], relaciones[rel[1]]);
+    });
+
+    const layout = new Layout(graph);
+    const renderer = new Renderer('#graph', graph, 400, 300);
+    renderer.draw();
+  }
 }
