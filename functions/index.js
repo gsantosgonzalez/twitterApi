@@ -9,6 +9,7 @@ const TGFObject = require('./helpers/TGFObject')
 
 exports.commonFollowers = functions.https.onRequest((request, response) => {
   response.set('Access-Control-Allow-Origin', '*')
+  response.set('Content-Type', 'application/json')
   const users = request.query.usuarios
   const [ userA, userB ] = users.split(',')
 
@@ -19,6 +20,7 @@ exports.commonFollowers = functions.https.onRequest((request, response) => {
 
 exports.friends = functions.https.onRequest((request, response) => {
   response.set('Access-Control-Allow-Origin', '*')
+  response.set('Content-Type', 'application/json')
   const users = request.query.usuarios
   const [ userA, userB ] = users.split(',')
 
@@ -47,6 +49,7 @@ exports.friends = functions.https.onRequest((request, response) => {
 
 exports.tgf = functions.https.onRequest((request, response) => {
   response.set('Access-Control-Allow-Origin', '*')
+  response.set('Content-Type', 'application/json')
   const users = request.query.usuarios
   const [ userA, userB ] = users.split(',')
 
