@@ -1,42 +1,105 @@
-const uniq = require('./helpers/uniq')
-const Twit = require('twit')
-
-/*
-// const T = new Twit({
-  // consumer_key: '4LKphBbf3077nBlliAMNzpQXM',
-  // consumer_secret: 'pXH43u3KvRwwzrz16K9NOTm60jmhn4TlnSBBnqxTBxJIgtUShV',
-  // access_token: '985236639814504449-j7ulHEQ5dKPmZvGjcagrXuITXCL8rpu',
-  // access_token_secret: '7qS4LuJ3iJ6XZO5lW1cDTV3280ckRv7lOsLmgHpJYnM3i',
-// })
-const T = new Twit({
-  consumer_key: 'Ja9PY1Q6N3RIXEa7U90gYslH0',
-  consumer_secret: 'STrcxaWAsfmAu83nclUNGamzHDhSimbJCdQKf46MIHEcVj8o2V',
-  access_token: '985236639814504449-giR1gUD08VzZA6feMUiwNBVVCXWnOJZ',
-  access_token_secret: 'HSPnNMfC3PRq1xjyTAMjyvuXS6GoUOHNq5EXO0fDMDAqL',
-})
-
+const intersect = require('./helpers/intersect')
+const T = require('./apiconfig')
 
 // TODO: update as param
 const userB = process.argv[3]
 const userA = process.argv[2]
 
-// Ask twitter API
-const followersPromises = [
-  T.get('followers/list', { screen_name: userA }),
-  T.get('followers/list', { screen_name: userB })
-]
+function getUserName (arrayOfUsers) {
+  return arrayOfUsers.map(u => u.screen_name)
+}
 
-Promise.all(followersPromises)
-  .then(results => {
-    const [ resultsA, resultsB ] = results
-    const resultsAClean = resultsA.data.users.map(u => u.screen_name)
-    const resultsBClean = resultsB.data.users.map(u => u.screen_name)
-    console.log(resultsAClean, resultsBClean)
-  })
-  .catch(e => {
+// Common followers
+function getCommonFollowers (userA, userB) {
+
+  const followersPromises = [
+    T.get('followers/list', { screen_name: userA, count: 200 }),
+    T.get('followers/list', { screen_name: userB, count: 200 })
+  ]
+
+  return Promise.all(followersPromises)
+    .then(results => {
+      let [
+        followersA,
+        followersB
+      ] = results
+
+      followersA = getUserName(followersA.data.users)
+      followersB = getUserName(followersB.data.users)
+
+      return [ followersA, followersB ]
+    })
+    .then((followers) => {
+      const [
+        followersA,
+        followersB
+      ] = followers
+      return intersect(followersA, followersB)
+    }) 
+    .catch(e => {
+      debugger
+      console.log('E>>>', e)
+    })
+}
+
+// Friends
+function getFriends (userA, userB) {
+
+  const friendsPromises = [
+    T.get('friends/list', { screen_name: userA, count: 200 }),
+    T.get('friends/list', { screen_name: userB, count: 200 })
+  ]
+  return Promise.all(friendsPromises)
+    .then(results => {
+      debugger
+      let [
+        friendsA,
+        friendsB,
+      ] = results
+
+      friendsA = getUserName(friendsA.data.users)
+      friendsB = getUserName(friendsB.data.users)
+
+      return [ friendsA, friendsB ]
+    })
+    .catch(e => {
+      debugger
+      console.log('E>>>', e)
+    })
+}
+
+// Common friends
+function getCommonFriends (commonFollowers, friendsA, friendsB) {
+
+  const commonFriendsA = intersect(commonFollowers, friendsA)
+  const commonFriendsB = intersect(commonFollowers, friendsB)
+
+  const commonFriends = intersect(commonFriendsA, commonFriendsB)
+
+  return commonFriends
+}
+
+// -------
+// Exec
+let commonFollowers,
+  friendsA, friendsB,
+  commonFriends
+
+Promise.all([
+  getCommonFollowers(userA, userB),
+  getFriends(userA, userB)
+])
+  .then(([ common, friends ]) => {
     debugger
-    console.log('E>>>', e)
+  commonFollowers = common
+  const [ friendsA, friendsB ] = friends
+  return [ commonFollowers, friendsA, friendsB ]
+})
+  .then(([ commonFollowers, friendsA, friendsB ]) => {
+    debugger
+    const commonFriends = getCommonFriends(commonFollowers, friendsA, friendsB)
+    console.log('Followers >>> \n', commonFollowers, '\n')
+    console.log('Friends >>', commonFriends, '\n')
   })
-//
-*/
+
 

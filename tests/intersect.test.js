@@ -1,5 +1,5 @@
 import test from 'ava'
-import uniq from '../helpers/uniq'
+import intersect from '../helpers/intersect'
 
 const arrayA = [
   'RespiroDeporte',
@@ -39,8 +39,8 @@ const arrayB = [
   'FlorQueen94'
 ]
 
-test('uniq should pass', async t => {
-  const u = uniq(arrayA, arrayB)
+test('intersect should pass', async t => {
+  const u = intersect(arrayA, arrayB)
   t.deepEqual(u, [
     'I3OI2I236O',
     'energizatesolar',
@@ -49,8 +49,8 @@ test('uniq should pass', async t => {
     'alexcceea'
   ])
 })
-test('uniq should fail', async t => {
-  const u = uniq(arrayA, arrayB)
+test('intersect should fail', async t => {
+  const u = intersect(arrayA, arrayB)
   t.notDeepEqual(u, [
     'I3OI2I236O',
     'energizatesolar',
