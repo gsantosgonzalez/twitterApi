@@ -9,8 +9,8 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   title = 'web';
 
-  public userA;
-  public userB;
+  public userA = 'gsantosg1982';
+  public userB = 'feroliveram';
 
   gettingFriends: Promise<any>;
   gettingFollowers: Promise<any>;
