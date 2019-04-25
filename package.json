@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ndb node followers.js",
+    "test": "ava --watch"
+  },
+  "ava": {
+		"files": [
+			"./**/*test.js"
+		]
   },
   "repository": {
     "type": "git",
@@ -16,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/jmmendivil/indigoCodeCamp/issues"
   },
-  "homepage": "https://github.com/jmmendivil/indigoCodeCamp#readme"
+  "homepage": "https://github.com/jmmendivil/indigoCodeCamp#readme",
+  "dependencies": {
+    "twit": "^2.2.11"
+  }
 }
