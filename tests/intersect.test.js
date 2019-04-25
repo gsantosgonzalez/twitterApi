@@ -1,5 +1,5 @@
 import test from 'ava'
-import intersect from '../helpers/intersect'
+import intersect from '../functions/helpers/intersect'
 
 const arrayA = [
   'RespiroDeporte',
