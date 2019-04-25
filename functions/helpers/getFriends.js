@@ -2,12 +2,18 @@ const T = require('../api')
 const getUserName = require('./getUserName')
 
 // Friends
-function getFriends (userA, userB) {
+function getFriends (userA, userB, testList) {
 
-  const friendsPromises = [
-    T.get('friends/list', { screen_name: userA, count: 200 }),
-    T.get('friends/list', { screen_name: userB, count: 200 })
-  ]
+  let friendsPromises
+  if (testList) {
+    friendsPromises = testList
+  } else {
+    friendsPromises = [
+      T.get('friends/list', { screen_name: userA, count: 200 }),
+      T.get('friends/list', { screen_name: userB, count: 200 })
+    ]
+  }
+
   return Promise.all(friendsPromises)
     .then(results => {
       debugger

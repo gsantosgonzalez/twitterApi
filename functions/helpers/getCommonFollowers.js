@@ -3,12 +3,17 @@ const intersect = require('./intersect')
 const getUserName = require('./getUserName')
 
 // Common followers
-function getCommonFollowers (userA, userB) {
+function getCommonFollowers (userA, userB, testList) {
 
-  const followersPromises = [
-    T.get('followers/list', { screen_name: userA, count: 200 }),
-    T.get('followers/list', { screen_name: userB, count: 200 })
-  ]
+  let followersPromises
+  if (testList) {
+    followersPromises = testList
+  } else {
+    followersPromises = [
+      T.get('followers/list', { screen_name: userA, count: 200 }),
+      T.get('followers/list', { screen_name: userB, count: 200 })
+    ]
+  }
 
   return Promise.all(followersPromises)
     .then(results => {
