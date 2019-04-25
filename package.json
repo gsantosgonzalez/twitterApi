@@ -7,11 +7,6 @@
     "start": "ndb node followers.js",
     "test": "ava --watch"
   },
-  "ava": {
-    "files": [
-      "**/*test.js"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jmmendivil/indigoCodeCamp.git"

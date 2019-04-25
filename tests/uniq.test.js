@@ -1,5 +1,5 @@
-import test from 'ava';
-import uniq from './uniq'
+import test from 'ava'
+import uniq from '../helpers/uniq'
 
 const arrayA = [
   'RespiroDeporte',
