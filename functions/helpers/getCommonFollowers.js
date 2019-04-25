@@ -1,4 +1,4 @@
-const T = require('../apiconfig')
+const T = require('../api')
 const intersect = require('./intersect')
 const getUserName = require('./getUserName')
 

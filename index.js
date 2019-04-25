@@ -1,7 +1,7 @@
-const getCommonFollowers = require('./helpers/getCommonFollowers')
-const getFriends = require('./helpers/getFriends')
-const getCommonFriends = require('./helpers/getCommonFriends')
-const TGFtext = require('./helpers/TGFtext')
+const getCommonFollowers = require('./functions/helpers/getCommonFollowers')
+const getFriends = require('./functions/helpers/getFriends')
+const getCommonFriends = require('./functions/helpers/getCommonFriends')
+const TGFtext = require('./functions/helpers/TGFtext')
 
 // TODO: update as param
 const userB = process.argv[3]
