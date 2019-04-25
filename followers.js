@@ -79,27 +79,43 @@ function getCommonFriends (commonFollowers, friendsA, friendsB) {
   return commonFriends
 }
 
+function TGFtext (userA, userB, common) {
+  console.log('1. ' + userA)
+  console.log('2. ' + userB)
+
+  common.forEach((c, i) => {
+    const n = i+3
+    console.log(n + '. ' + c)
+  })
+
+  common.forEach((c, i) => {
+    const n = i+3
+    console.log('1.', n + '.')
+    console.log('2.', n + '.')
+  })
+}
+
 // -------
 // Exec
 let commonFollowers,
   friendsA, friendsB,
   commonFriends
 
-Promise.all([
-  getCommonFollowers(userA, userB),
-  getFriends(userA, userB)
-])
+Promise
+  .all([
+    getCommonFollowers(userA, userB),
+    getFriends(userA, userB)
+  ])
   .then(([ common, friends ]) => {
-    debugger
-  commonFollowers = common
-  const [ friendsA, friendsB ] = friends
-  return [ commonFollowers, friendsA, friendsB ]
-})
+    commonFollowers = common
+    const [ friendsA, friendsB ] = friends
+    return [ commonFollowers, friendsA, friendsB ]
+  })
   .then(([ commonFollowers, friendsA, friendsB ]) => {
-    debugger
     const commonFriends = getCommonFriends(commonFollowers, friendsA, friendsB)
     console.log('Followers >>> \n', commonFollowers, '\n')
     console.log('Friends >>', commonFriends, '\n')
+    TGFtext(userA, userB, commonFriends)
   })
 
 
