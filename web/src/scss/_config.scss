@@ -1,0 +1,260 @@
+@import "variables";
+$font-primary: "Roboto-Regular",
+"Roboto",
+sans-serif;
+$colors: (brand-gold: #eecd83,
+primary-dark: #13252f,
+primary-light-blue: #00c2ff,
+primary-dark-opacity: rgba(19, 37, 47, 0.9),
+link-blue: #006098,
+sign-blue: #0099c9,
+primary-dark-grey: #4b4f56,
+primary-grey: #666666,
+secondary-grey: #adadad,
+primary-light-grey: #c7c5c8,
+secondary-light-grey: #e1e2e3,
+landing-background: #f8f8f8,
+white: #ffffff,
+notification-red: #ff3b00,
+success-snackBar: #49a856,
+btn-red: #f43110,
+highlight-red-text: #e84747,
+warm-grey: #808080,
+warm-grey-two: #9b9b9b,
+text--grey: #9b9b9b);
+$variations: (light: (function: lighten,
+parameters: 15%),
+dark: (function: darken,
+parameters: 10%),
+fade: (function: rgba,
+parameters: 0.7),
+gray: (function: grayscale),
+shade: (function: mix,
+parameters: white 80%));
+
+// Color variation
+@function color-variation($color, $variation: false) {
+  @if map-has-key($colors, $color) {
+    $color: map-get($colors, $color);
+  }
+
+  @else {
+    @if type-of($color) !=color {
+      @error "Invalid color name: `#{$color}`.";
+    }
+  }
+
+  @if $variation {
+    @if not map-has-key($variations, $variation) {
+      @error "Invalid $variation: `#{$variation}`.";
+    }
+
+    @else {
+      $this-variation: map-get($variations, $variation);
+      $args: join(map-get($this-variation, function), $color);
+
+      @if map-get($this-variation, parameters) {
+        $args: join($args, map-get($this-variation, parameters));
+      }
+
+      @return call($args);
+    }
+  }
+
+  @return $color;
+}
+
+// Shorthand for color-variation
+@function cv($color, $variation: false) {
+  @return color-variation($color, $variation);
+}
+
+//Btn variation
+@mixin btn--dark {
+  width: 165px;
+  height: 36px;
+  margin: 10px auto 0 auto;
+  border-radius: 4px;
+  background-color: cv(primary-dark);
+  font-size: 0.8em;
+  color: cv(white);
+}
+
+@mixin btn--light {
+  @include btn--dark;
+  background-color: cv(primary-light-blue);
+}
+
+@mixin btn-proto {
+  border-radius: 3px;
+  font-size: 0.8em;
+  background-color: cv(primary-dark);
+  color: cv(white);
+  width: 76px;
+  height: 32px;
+  position: absolute;
+  margin-top: -50px;
+  right: 10px;
+}
+
+// Media query mixin
+@mixin media($media) {
+  @if $media==small {
+    @media only screen and (max-width: 600px) {
+      @content;
+    }
+  }
+
+  @else if $media==medium {
+    @media only screen and (min-width: 601px) and (max-width: 991px) {
+      @content;
+    }
+  }
+
+  @else if $media==large {
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+      @content;
+    }
+  }
+
+  @else if $media==extra-large {
+    @media only screen and (min-width: 1200px) {
+      @content;
+    }
+  }
+
+  @else if $media==retina {
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2),
+      only screen and (min--moz-device-pixel-ratio: 2),
+      only screen and (-o-min-device-pixel-ratio: 2/1),
+      only screen and (min-device-pixel-ratio: 2),
+      only screen and (min-resolution: 192dpi),
+      only screen and (min-resolution: 2dppx) {
+      @content;
+    }
+  }
+}
+
+// Mixing Grid for all views
+@mixin grid--container {
+  display: grid;
+  grid-column-gap: 17px;
+  grid-template-columns: auto $web-base-content-width 300px auto;
+  grid-template-rows: 50px auto auto;
+  margin: 10px auto 30px auto;
+  justify-items: start;
+
+  @include media(medium) {
+    grid-template-columns: auto 300px;
+  }
+
+  @include media(small) {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+  .grid--content {
+    width: auto;
+
+    @include media(extra-large) {
+      grid-column: 2;
+      max-width: $web-base-content-width;
+    }
+
+    @include media(large) {
+      grid-column: 2;
+      max-width: $web-base-content-width;
+    }
+
+  @include media(extra-large) {
+    grid-column: 2;
+    max-width: 620px;
+  }
+
+  @include media(large) {
+    grid-column: 2;
+    max-width: 620px;
+  }
+
+  @include media(small) {
+    margin: 0 15px;
+  }
+}
+
+/* ------------------GRADIENT SCROLL---------------------- */
+/// Convert angle
+/// @author Chris Eppstein
+/// @param {Number} $value - Value to convert
+/// @param {String} $unit - Unit to convert to
+/// @return {Number} Converted angle
+@function convert-angle($value, $unit) {
+  $convertable-units: deg grad turn rad;
+  $conversion-factors: 1 (10grad/9deg) (1turn/360deg) (3.1415926rad/180deg);
+  @if index($convertable-units, unit($value)) and index($convertable-units, $unit) {
+    @return $value
+             / nth($conversion-factors, index($convertable-units, unit($value)))
+             * nth($conversion-factors, index($convertable-units, $unit));
+  }
+
+  @warn "Cannot convert `#{unit($value)}` to `#{$unit}`.";
+}
+
+/// Test if `$value` is an angle
+/// @param {*} $value - Value to test
+/// @return {Bool}
+@function is-direction($value) {
+  $is-direction: index((to top, to top right, to right top, to right, to bottom right, to right bottom, to bottom, to bottom left, to left bottom, to left, to left top, to top left), $value);
+  $is-angle: type-of($value) == 'number' and index('deg' 'grad' 'turn' 'rad', unit($value));
+
+  @return $is-direction or $is-angle;
+}
+
+/// Convert a direction to legacy syntax
+/// @param {Keyword | Angle} $value - Value to convert
+/// @require {function} is-direction
+/// @require {function} convert-angle
+@function legacy-direction($value) {
+  @if is-direction($value) == false {
+    @warn "Cannot convert `#{$value}` to legacy syntax because it doesn't seem to be an angle or a direction";
+  }
+
+  $conversion-map: (
+    to top          : bottom,
+    to top right    : bottom left,
+    to right top    : left bottom,
+    to right        : left,
+    to bottom right : top left,
+    to right bottom : left top,
+    to bottom       : top,
+    to bottom left  : top right,
+    to left bottom  : right top,
+    to left         : right,
+    to left top     : right bottom,
+    to top left     : bottom right
+  );
+
+  @if map-has-key($conversion-map, $value) {
+    @return map-get($conversion-map, $value);
+  }
+
+  @return 90deg - convert-angle($value, 'deg');
+}
+
+/// Mixin printing a linear-gradient
+/// as well as a plain color fallback
+/// and the `-webkit-` prefixed declaration
+/// @access public
+/// @param {String | List | Angle} $direction - Linear gradient direction
+/// @param {Arglist} $color-stops - List of color-stops composing the gradient
+@mixin linear-gradient($direction, $color-stops...) {
+  @if is-direction($direction) == false {
+    $color-stops: ($direction, $color-stops);
+    $direction: 180deg;
+  }
+
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}

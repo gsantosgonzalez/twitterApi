@@ -1,0 +1,52 @@
+.full-app {
+  display: grid;
+  grid-template-columns: auto 620px auto;
+  grid-template-rows: max-content;
+
+  .form-content {
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 10% repeat(2, 40%) 10%;
+
+    h1 {
+      grid-column: 2/4;
+      color: #369;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 250%;
+    }
+
+    .controls {
+      width: 100%;
+      grid-column: 2/4;
+
+      input {
+        width: 50%;
+        border-radius: 4px;
+        height: 24px;
+        margin: 12px auto;
+      }
+    }
+
+    .actions {
+      width: 50%;
+      grid-column: 2/4;
+
+      button {
+        width: 50%;
+        background-color: green;
+        color: white;
+        font-size: 14px;
+        border-radius: 4px;
+        height: 24px;
+      }
+    }
+  }
+
+  .result-content {
+    margin-top: 18px;
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 10% repeat(2, 40%) 10%;
+  }
+}
