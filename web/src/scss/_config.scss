@@ -2,35 +2,49 @@
 $font-primary: "Roboto-Regular",
 "Roboto",
 sans-serif;
-$colors: (brand-gold: #eecd83,
-primary-dark: #13252f,
-primary-light-blue: #00c2ff,
-primary-dark-opacity: rgba(19, 37, 47, 0.9),
-link-blue: #006098,
-sign-blue: #0099c9,
-primary-dark-grey: #4b4f56,
-primary-grey: #666666,
-secondary-grey: #adadad,
-primary-light-grey: #c7c5c8,
-secondary-light-grey: #e1e2e3,
-landing-background: #f8f8f8,
-white: #ffffff,
-notification-red: #ff3b00,
-success-snackBar: #49a856,
-btn-red: #f43110,
-highlight-red-text: #e84747,
-warm-grey: #808080,
-warm-grey-two: #9b9b9b,
-text--grey: #9b9b9b);
-$variations: (light: (function: lighten,
-parameters: 15%),
-dark: (function: darken,
-parameters: 10%),
-fade: (function: rgba,
-parameters: 0.7),
-gray: (function: grayscale),
-shade: (function: mix,
-parameters: white 80%));
+$colors: (
+  brand-gold: #eecd83,
+  primary-dark: #13252f,
+  primary-light-blue: #00c2ff,
+  primary-dark-opacity: rgba(19, 37, 47, 0.9),
+  link-blue: #006098,
+  sign-blue: #0099c9,
+  primary-dark-grey: #4b4f56,
+  primary-grey: #666666,
+  secondary-grey: #adadad,
+  primary-light-grey: #c7c5c8,
+  secondary-light-grey: #e1e2e3,
+  landing-background: #f8f8f8,
+  white: #ffffff,
+  notification-red: #ff3b00,
+  success-snackBar: #49a856,
+  btn-red: #f43110,
+  highlight-red-text: #e84747,
+  warm-grey: #808080,
+  warm-grey-two: #9b9b9b,
+  text--grey: #9b9b9b
+);
+$variations: (
+  light: (
+    function: lighten,
+    parameters: 15%
+  ),
+  dark: (
+    function: darken,
+    parameters: 10%
+  ),
+  fade: (
+    function: rgba,
+    parameters: 0.7
+  ),
+  gray: (
+    function: grayscale
+  ),
+  shade: (
+    function: mix,
+    parameters: white 80%
+  )
+);
 
 // Color variation
 @function color-variation($color, $variation: false) {
@@ -100,19 +114,19 @@ parameters: white 80%));
 // Media query mixin
 @mixin media($media) {
   @if $media==small {
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 667px) {
       @content;
     }
   }
 
   @else if $media==medium {
-    @media only screen and (min-width: 601px) and (max-width: 991px) {
+    @media only screen and (min-width: 668px) and (max-width: 920px) {
       @content;
     }
   }
 
   @else if $media==large {
-    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+    @media only screen and (min-width: 921px) and (max-width: 1199px) {
       @content;
     }
   }

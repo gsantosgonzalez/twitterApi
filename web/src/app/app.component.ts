@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 import * as Dracula from 'graphdracula';
 
+import { config } from 'src/env/development.env';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,8 +13,8 @@ import * as Dracula from 'graphdracula';
 export class AppComponent {
   title = 'web';
 
-  public userA = 'gsantosg1982';
-  public userB = 'feroliveram';
+  public userA = '';
+  public userB = '';
 
   gettingFriends: Promise<any>;
   gettingFollowers: Promise<any>;
@@ -22,6 +24,10 @@ export class AppComponent {
   tgfData: any;
 
   constructor(private http: HttpClient) { }
+
+  ngOnDestroy() {
+    this.emptyResults();
+  }
 
   get validateForm() {
     let isValid = false;
@@ -33,20 +39,36 @@ export class AppComponent {
     return isValid;
   }
 
+  getFollowers() {
+    if (this.userA && this.userB) {
+      this.emptyResults();
+
+      this.gettingFollowers = this.http.get(
+        config.base_url + '/commonFollowers?users=' + this.userA + ',' + this.userB
+      )
+      .toPromise()
+      .then((response: any) => {
+        this.followers = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+  }
+
   getFriends() {
     if (this.userA && this.userB) {
       this.emptyResults();
 
       this.gettingFriends = this.http.get(
-        'https://us-central1-indigocodecamp.cloudfunctions.net/friends?usuarios=' + this.userA + ',' + this.userB
+        config.base_url + '/friends?users=' + this.userA + ',' + this.userB
       )
       .toPromise()
       .then((response: any) => {
-        console.log(response);
-        this.friends = response;
+        this.friends = response.data;
 
-        this.getTGFData(this.userA, this.userB).then(response => {
-          this.tgfData = response;
+        this.getTGFData(this.userA, this.userB).then((response: any) => {
+          this.tgfData = response.data;
           this.renderTGF(this.tgfData);
         });
       })
@@ -56,27 +78,9 @@ export class AppComponent {
     }
   }
 
-  getFollowers() {
-    if (this.userA && this.userB) {
-      this.emptyResults();
-
-      this.gettingFollowers = this.http.get(
-        'https://us-central1-indigocodecamp.cloudfunctions.net/commonFollowers?usuarios=' + this.userA + ',' + this.userB
-      )
-      .toPromise()
-      .then((response: any) => {
-        console.log(response);
-        this.followers = response;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
-  }
-
   getTGFData(userA: string, userB: string) {
     return this.http.get(
-      'https://us-central1-indigocodecamp.cloudfunctions.net/tgf?usuarios=' + userA + ',' + userB
+      config.base_url + '/tgf?users=' + userA + ',' + userB
     ).toPromise();
   }
 

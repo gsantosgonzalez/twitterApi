@@ -1,80 +1,60 @@
-<div class="container mx-auto">
+<div class="container">
 
-  <img style="margin-top: 25px;" class="mb-6" width="64px" src="assets/logoindigo.svg" >
-  <div class="md:flex w-full max-w-sm ">
-
-    <div>
-      <div class="md:flex md:items-center mb-6">
-        <div class="md:w-1/3">
-          <img class="block h-16 sm:h-14 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" src='{{"https://avatars.io/twitter/" + userA + "/medium"}}'>
-        </div>
-        <div class="md:w-2/3">
-          <input [(ngModel)]="userA" placeholder="Usuario 1" class="bg-grey-lighter appearance-none border-2 border-grey-lighter rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple" id="inline-full-name" type="text">
-        </div>
+  <div class="main-form">
+    <div class="form-input">
+      <div class="form-input__image-label">
+        <img src='{{"https://avatars.io/twitter/" + userA + "/medium"}}'>
       </div>
-      <div class="md:flex md:items-center mb-6">
-        <div class="md:w-1/3">
-          <img class="block h-16 sm:h-14 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" src='{{"https://avatars.io/twitter/" + userB + "/medium"}}'>
-          <!-- <label class="block text-grey font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-username"> -->
-              <!-- Usuario 2 -->
-          <!-- </label> -->
-        </div>
-        <div class="md:w-2/3">
-          <input [(ngModel)]="userB" placeholder="Usuario 2" class="bg-grey-lighter appearance-none border-2 border-grey-lighter rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple" id="inline-username" type="text">
-        </div>
-      </div>
-      <div class="md:flex md:items-center">
-        <div class="md:w-1/3"></div>
-        <div class="md:w-2/3">
-          <button (click)="getFriends()"
-             [disabled]="!validateForm"
-             class="shadow bg-purple hover:bg-purple-light focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
-            Amigos
-          </button>
-        </div>
-        <div class="md:w-2/3">
-          <button (click)="getFollowers()"
-             [disabled]="!validateForm"
-             class="shadow bg-purple hover:bg-purple-light focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
-            Seguidores
-          </button>
-        </div>
+      <div class="form-input__control">
+        <input [(ngModel)]="userA" placeholder="Usuario 1" class="" id="inline-full-name" type="text">
       </div>
     </div>
-
-
-  </div>
-
-
-  <div class="md:flex w-full max-w-sm">
-    <div class="md:flex md:items-center mb-6">
-      <ng-container *ngIf="friends.length">
-        <ul class="list-reset">
-          <li *ngFor="let friend of friends">{{ friend }}</li>
-        </ul>
-      </ng-container>
-      <ng-container *ngIf="followers.length">
-        <ul class="list-reset">
-          <li *ngFor="let follower of followers">{{ follower }}</li>
-        </ul>
-      </ng-container>
+    <div class="form-input">
+      <div class="form-input__image-label">
+        <img src='{{"https://avatars.io/twitter/" + userB + "/medium"}}'>
+      </div>
+      <div class="form-input__control">
+        <input [(ngModel)]="userB" placeholder="Usuario 2" class="" id="inline-username" type="text">
+      </div>
+    </div>
+    <div class="form-input__actions">
+      <div class=""></div>
+      <div class="form-input__action-buttons">
+        <button (click)="getFriends()"
+            [disabled]="!validateForm"
+            class="" type="button">
+          Amigos
+        </button>
+        <button (click)="getFollowers()"
+            [disabled]="!validateForm"
+            class="" type="button">
+          Seguidores
+        </button>
+      </div>
     </div>
   </div>
 
+  <div class="results">
+    <ng-container *ngIf="friends.length">
+      <ul class="">
+        <li *ngFor="let friend of friends">
+            <a href="{{ 'https://twitter.com/' + friend }}" target="__blank">
+              <img src='{{"https://avatars.io/twitter/" + friend + "/medium"}}' alt="">
+              <span>{{ friend }}</span>
+            </a>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="followers.length">
+      <ul class="">
+        <li *ngFor="let follower of followers">
+          <a href="{{ 'https://twitter.com/' + follower }}" target="__blank">
+            <img src='{{"https://avatars.io/twitter/" + follower + "/medium"}}' alt="">
+            <span>{{ follower }}</span>
+          </a>
+        </li>
+      </ul>
+    </ng-container>
+  </div>
 
-
-  <!-- <div class="bg-white mx-auto max-w-sm shadow-lg rounded-lg overflow-hidden"> -->
-  <!-- <div class="sm:flex sm:items-center px-6 py-4"> -->
-  <!-- <img class="block h-16 sm:h-24 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" src="https://avatars2.githubusercontent.com/u/4323180?s=400&u=4962a4441fae9fba5f0f86456c6c506a21ffca4f&v=4" alt=""> -->
-  <!-- <div class="text-center sm:text-left sm:flex-grow"> -->
-  <!-- <div class="mb-4"> -->
-  <!-- <p class="text-xl leading-tight">Adam Wathan</p> -->
-  <!-- <p class="text-sm leading-tight text-grey-dark">Developer at NothingWorks Inc.</p> -->
-  <!-- </div> -->
-  <!-- <div> -->
-  <!-- <button class="text-xs font-semibold rounded-full px-4 py-1 leading-normal bg-white border border-purple text-purple hover:bg-purple hover:text-white">Message</button> -->
-  <!-- </div> -->
-  <!-- </div> -->
-  <!-- </div> -->
-  <!-- </div> -->
 </div>
