@@ -1,14 +1,12 @@
 <div class="container mx-auto">
 
-  <img class="mb-6" width="64px" src="assets/logoindigo.svg" >
+  <img style="margin-top: 25px;" class="mb-6" width="64px" src="assets/logoindigo.svg" >
   <div class="md:flex w-full max-w-sm ">
 
     <div>
       <div class="md:flex md:items-center mb-6">
         <div class="md:w-1/3">
-          <label class="block text-grey font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-full-name">
-            Usuario 1
-          </label>
+          <img class="block h-16 sm:h-14 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" src='{{"https://avatars.io/twitter/" + userA + "/medium"}}'>
         </div>
         <div class="md:w-2/3">
           <input [(ngModel)]="userA" placeholder="Usuario 1" class="bg-grey-lighter appearance-none border-2 border-grey-lighter rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple" id="inline-full-name" type="text">
@@ -16,9 +14,10 @@
       </div>
       <div class="md:flex md:items-center mb-6">
         <div class="md:w-1/3">
-          <label class="block text-grey font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-username">
-              Usuario 2
-          </label>
+          <img class="block h-16 sm:h-14 rounded-full mx-auto mb-4 sm:mb-0 sm:mr-4 sm:ml-0" src='{{"https://avatars.io/twitter/" + userB + "/medium"}}'>
+          <!-- <label class="block text-grey font-bold md:text-right mb-1 md:mb-0 pr-4" for="inline-username"> -->
+              <!-- Usuario 2 -->
+          <!-- </label> -->
         </div>
         <div class="md:w-2/3">
           <input [(ngModel)]="userB" placeholder="Usuario 2" class="bg-grey-lighter appearance-none border-2 border-grey-lighter rounded w-full py-2 px-4 text-grey-darker leading-tight focus:outline-none focus:bg-white focus:border-purple" id="inline-username" type="text">
@@ -47,17 +46,19 @@
   </div>
 
 
-  <div class="result-content">
-    <ng-container *ngIf="friends">
-      <ul class="list-reset">
-        <li *ngFor="let friend of friends">{{ friend }}</li>
-      </ul>
-    </ng-container>
-    <ng-container *ngIf="followers">
-      <ul class="list-reset">
-        <li *ngFor="let follower of followers">{{ follower }}</li>
-      </ul>
-    </ng-container>
+  <div class="md:flex w-full max-w-sm">
+    <div class="md:flex md:items-center mb-6">
+      <ng-container *ngIf="friends.length">
+        <ul class="list-reset">
+          <li *ngFor="let friend of friends">{{ friend }}</li>
+        </ul>
+      </ng-container>
+      <ng-container *ngIf="followers.length">
+        <ul class="list-reset">
+          <li *ngFor="let follower of followers">{{ follower }}</li>
+        </ul>
+      </ng-container>
+    </div>
   </div>
 
 
